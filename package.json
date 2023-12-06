@@ -12,7 +12,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://bpham30.github.io/cw8/",
+  "homepage": "https://bpham30.github.io/CW8",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

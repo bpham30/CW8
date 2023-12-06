@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { DropdownButton, DropdownItem } from 'react-bootstrap';
 import List from './List';
 
 class FilteredList extends Component {
@@ -9,7 +9,8 @@ class FilteredList extends Component {
     //The state is just a list of key/value pairs (like a hashmap)
     //TODO (FilteredList): Add an additional state variable within this.state called "type" and set it to a default value
     this.state = {
-      search: ""
+      search: "",
+      type: "All"
     };
   }
 
@@ -20,23 +21,35 @@ class FilteredList extends Component {
 
   //TODO (FilteredList): Set the state of the "type" state variable depending on what is passed in
   onFilter = (event) => {
-
+    this.setState({type: event});
   }
 
   //TODO (FilteredList): Change filterItem to take into account the "type" state variable when filtering
   filterItem = (item) => {
-      return item.name.toLowerCase().search(this.state.search) !== -1;
+    if(item.name.toLowerCase().search(this.state.search) !== -1 && (this.state.type === "All" || item.type === this.state.type)){
+      return true;
+    }
+    return false;
   }
 
   render(){
     return (
-        <div className = "filter-list">
-         
-          /*TODO (FilteredList): Create a Dropdown Menu with three different menu options: Fruit, Vegetables, and All*/
-          
-          <input type = "text" placeholder = "Search" onChange = {this.onSearch} />
-          <List items = {this.props.items.filter(this.filterItem)} />
+      <div className="filter-list">
+        <h1>Produce Search</h1>
+        <div className="row">
+
+       
+        <input type="text" placeholder="Search" onChange={this.onSearch} />
+
+        {/* TODO (FilteredList): Create a Dropdown Menu with three different menu options: Fruit, Vegetables, and All */}
+        <DropdownButton title="Filter by Type" id="dropdown-size-medium" onSelect={this.onFilter}>
+          <DropdownItem eventKey="All">All </DropdownItem>
+          <DropdownItem eventKey="Fruit">Fruit </DropdownItem>
+          <DropdownItem eventKey="Vegetable">Vegetables </DropdownItem>
+        </DropdownButton>
         </div>
+        <List items={this.props.items.filter(this.filterItem)} />
+      </div>
     );
   }
 }
